@@ -20,6 +20,22 @@ function mainQuestions() {
                 {
                     name:"View all employees",
                     value:"view_employees"
+                },
+                {
+                    name:"Add a Department",
+                    value:"add_department"
+                },
+                {
+                    name:"Add a Role",
+                    value:"add_role"
+                },
+                {
+                    name:"Add an Employee",
+                    value:"add_employee"
+                },
+                {
+                    name:"Update Employee Role",
+                    value:"update_role"
                 }
                 // more curly brackets with name and value for all options
             ]
@@ -32,13 +48,25 @@ function mainQuestions() {
                 viewEmployees()
                 break;
 
-            // case "view_employees":
-            //     viewEmployees()
-            //     break;
+            case "view_departments":
+                viewDepartments()
+                break;
 
-            // case "view_employees":
-            //     viewEmployees()
-            //     break;
+            case "view_roles":
+                viewRoles()
+                break;
+
+                case "add_department":
+                    addDepartment()
+                    break;
+
+                    case "add_role":
+                        addRole()
+                        break;
+
+                        case "add_employee":
+                            addEmployee()
+                            break;
         }
     });
 }
@@ -49,3 +77,19 @@ function viewEmployees () {
         console.table(employees)
     })
 } 
+
+
+function addDepartment() {
+    prompt([
+      {
+        name: "name",
+        message: "What is the name of the department?"
+      }
+    ])
+      .then(res => {
+        let name = res;
+        db.createDepartment(name)
+          .then(() => console.log(`Added ${name.name} to the database`))
+          .then(() => loadMainPrompts())
+      })
+  }
