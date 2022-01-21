@@ -56,15 +56,15 @@ function mainQuestions() {
                 viewRoles()
                 break;
 
-                case "add_department":
+            case "add_department":
                     addDepartment()
                     break;
 
-                    case "add_role":
+            case "add_role":
                         addRole()
                         break;
 
-                        case "add_employee":
+            case "add_employee":
                             addEmployee()
                             break;
         }
