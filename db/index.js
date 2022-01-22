@@ -28,6 +28,7 @@ class DB {
       );
   }
   addRole(role) {
+      console.log(role);
     return this.connection.promise().query(
         "INSERT INTO role SET ?", role
     );
@@ -38,7 +39,16 @@ addEmployee(employee) {
     );
 }
 
-// UPDATE EMPLOYEE INFO
+getManagers() {
+    return this.connection.promise().query(
+        "SELECT * FROM employee WHERE manager_id IS null",
+    );
+}
+updateEmployeeRole (role_id, id) {
+    return this.connection.promise().query(
+        "UPDATE employee SET role_id =? WHERE id = ?", [role_id, id]
+    );
+}
 }
 
 module.exports = new DB(connection);

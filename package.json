@@ -3,5 +3,23 @@
     "console.table": "^0.10.0",
     "inquirer": "^8.2.0",
     "mysql2": "^2.3.3"
-  }
+  },
+  "name": "employee-tracker-challenge-12",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabrielg/Employee-Tracker-Challenge-12.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sabrielg/Employee-Tracker-Challenge-12/issues"
+  },
+  "homepage": "https://github.com/sabrielg/Employee-Tracker-Challenge-12#readme"
 }
