@@ -2,6 +2,7 @@
 const DB = require('./db/index.js')
 
 const inquirer = require("inquirer");
+const db = require('./db/connection.js');
 
 
 function mainQuestions() {
@@ -15,6 +16,10 @@ function mainQuestions() {
                     name:"View all employees",
                     value:"view_employees"
                 },
+                {
+                    name:"View all departments",
+                value: "view_departments"
+            },
                 {
                     name:"Add a Department",
                     value:"add_department"
@@ -97,6 +102,7 @@ function viewDepartments () {
 
 
 function addDepartment() {
+
     inquirer.prompt([
       {
         name: "name",
@@ -106,12 +112,19 @@ function addDepartment() {
       .then(res => {
         let name = res;
         DB.addDept(name)
-          .then(() => console.log(`Added ${name.name} to the database`))
+          .then(() => console.table(`Added ${name.name} to the database`))
           .then(() => mainQuestions())
       })
   }
 
-  function addRole() {
+  async function addRole() {
+
+    const departments = await db.promise().query('SELECT * FROM department');
+    const departmentMap = await departments[0].map(({id, name}) => ({
+        name: name, 
+        value: id
+    }));
+
       inquirer.prompt([
       {
         name: "title",
@@ -125,21 +138,22 @@ function addDepartment() {
       },
       {
           name: "department_id",
-          type: "input",
-          message: "What is the Department ID?"
+          type: "list",
+          choices: departmentMap,
+          message: "What department would you like to add the role to?"
       }
     ])
       .then(res => {
-          console.log(res);
+          console.table(res);
         DB.addRole(res)
-          .then(() => console.log(`Added ${res.title} to the database`))
+          .then(() => console.table(`Added ${res.title} to the database`))
           .then(() => mainQuestions())
       })
   }
 
   async function addEmployee() {
       const managers = await DB.getManagers()
-      console.log(managers [0] )
+      console.table(managers [0] )
     const managerMap = await managers[0].map(({ id, first_name, last_name, })=> ( {
         name: `${first_name} ${last_name}`,
         value: id
@@ -173,9 +187,9 @@ function addDepartment() {
     },
   ])
     .then(res => {
-        console.log(res);
+        console.table(res);
       DB.addEmployee(res)
-        .then(() => console.log(`Added ${res.first_name} ${res.last_name} to the database`))
+        .then(() => console.table(`Added ${res.first_name} ${res.last_name} to the database`))
         .then(() => mainQuestions())
     })
 }
