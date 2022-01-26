@@ -194,23 +194,54 @@ function addDepartment() {
     })
 }
 
-function updateEmployeeRole() {
-    inquirer.prompt( [
+// function updateEmployeeRole() {
+//     inquirer.prompt( [
+//         {
+//             name: "id",
+//             type:"input",
+//             message: "What is the employee's id?"
+//     },
+//     {
+//         name: "role_id",
+//         type: 'input',
+//         message:"What is the employee's new role id?"
+//     }
+//     ])
+//     .then(res => {
+//         DB.updateEmployeeRole(res.role_id,res.id)
+//     })
+//     .then(() => mainQuestions())
+// }
+
+async function updateEmployeeRole () {
+    const employees = await db.promise().query(`SELECT * FROM employee`);
+    const employeesMap = await employees[0].map(({id, first_name, last_name, role_id, manager_id}) => ({
+        name: `${first_name} ${last_name}`,
+        value: id
+    }))
+
+    const roles = await db.promise().query(`SELECT * FROM role`);
+    const rolesMap = await roles[0].map(({id, title, salary, department_id}) => ({
+        name: title,
+        value: id
+    }))
+
+    const employeeData = await inquirer.prompt([
         {
-            name: "id",
-            type:"input",
-            message: "What is the employee's id?"
-    },
-    {
-        name: "role_id",
-        type: 'input',
-        message:"What is the employee's new role id?"
-    }
+            type: 'list',
+            name: 'id',
+            message: 'Which employee would you like to edit?',
+            choices: employeesMap
+        },
+        {
+            type: 'list',
+            name:'role_id',
+            message: 'What is their new role?',
+            choices: rolesMap
+        }
     ])
-    .then(res => {
-        DB.updateEmployeeRole(res.role_id,res.id)
-    })
-    .then(() => mainQuestions())
+    await db.promise().query(`UPDATE employee SET role_id = ${employeeData.role_id} WHERE id= ${employeeData.id}`);
+    mainQuestions();
 }
 
   mainQuestions();
