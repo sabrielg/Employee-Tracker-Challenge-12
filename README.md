@@ -9,11 +9,11 @@ This application uses Inquirer, node, and MYSQL to house the data. This is usefu
 A user would need to download the code files and relevant software to use this program. 
 
 Please see the video here:
-[](https://watch.screencastify.com/v/rVMxPacoxyVQ9sUnFZkz)
+[Video](https://watch.screencastify.com/v/rVMxPacoxyVQ9sUnFZkz)
 
 
 ## Credits
-David Tait [](https://github.com/davidtait1996)
+[David Tait](https://github.com/davidtait1996)
 TA Brian Ford
 
 ## License
